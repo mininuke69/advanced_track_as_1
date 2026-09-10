@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -15,11 +16,12 @@ import java.util.Scanner;
  *
  * task 2:
  * 1. create function magicSetCheck(...) that returns true if input is a magic set
- * 2. create function magicSetGenerate(...) that takes the corrected palindrome list and returns the largest magic set.
+ * 2. create function int magicSetGenerate(...) that takes the corrected palindrome list
+ *    and returns the number of elements in the largest magic set.
  *    it does this by trying combinations of two palindromes, if it finds one,
  *    it tries to make one of three, up to the length of the corrected palindrome list.
- *    if it fails to make a list anytime before that, it returns that list.
- * 3. run magicSetGenerate(...) and count the number of outputs
+ *    if it fails to make a list anytime before that, it returns.
+ * 3. parse input and run magicSetGenerate(...)
  *
  * 
  * END TODO
@@ -68,5 +70,28 @@ class KingsPalindromeList {
             numberToCorrect++;
         }
         return numberToCorrect;
+    }
+
+    static boolean magicSetCheck(ArrayList<Long> listToCheck) {
+
+        var a = new ArrayList<Long>();
+        // go through list and check neighbors
+        for (int i = 0; i < listToCheck.size() - 1; i++) {
+            var el0 = String.valueOf(listToCheck.get(i));
+            var el1 = String.valueOf(listToCheck.get(i + 1));
+
+            // match length by truncating longest, then check equality
+            var lengthDifference = Math.abs(el0.length() - el1.length());
+            var charactersToRemoveOnEachSide = lengthDifference / 2;
+            var el0IsLonger = el0.length() > el1.length();
+            var longestElement = el0IsLonger ? el0 : el1;
+            var shortestElement = el0IsLonger ? el1 : el0;
+
+            var truncatedLongest = longestElement.substring(charactersToRemoveOnEachSide, longestElement.length() - charactersToRemoveOnEachSide);
+            if (!truncatedLongest.equals(shortestElement)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
