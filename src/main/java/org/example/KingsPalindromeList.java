@@ -29,13 +29,9 @@ import java.util.Scanner;
  *
  * magicSetGenerate:
  * 1. Seperate each element to according to its length in a HashMap
- * 2. Remove unused lengths from the HashMap
- * 3. Starting from the maximum length possible check to see if there is a valid magic set in that length
- *    a. Using a recursive function, get a combination of each element from each length list.
- *    b. Check if they match using magicSetCheck function.
- *    c. If match then return the array.
- *    d. If not, try for different cases.
- *    e. If no magic set found for the given length, decrease the length by 1 and try again.
+ * 2. Start from the lowest length element and check if it is in a magic set of any longer length element.
+ * 3. If a magic set is found continue from the longer length element.
+ * 4. If no magic set is found return to the previous length object.
  * 
  * END TODO
  * 
@@ -87,68 +83,51 @@ class KingsPalindromeList {
         return numberToCorrect;
     }
 
-    static boolean magicSetCheck(ArrayList<Long> listToCheck) {
-
-        var a = new ArrayList<Long>();
-        // go through list and check neighbors
-        for (int i = 0; i < listToCheck.size() - 1; i++) {
-            var el0 = String.valueOf(listToCheck.get(i));
-            var el1 = String.valueOf(listToCheck.get(i + 1));
+    static boolean magicSetCheck(long num1, long num2) {
+        
+            var e0 = String.valueOf(num1);
+            var e1 = String.valueOf(num2);
 
             // match length by truncating longest, then check equality
-            var lengthDifference = Math.abs(el0.length() - el1.length());
+            var lengthDifference = Math.abs(e0.length() - e1.length());
             var charactersToRemoveOnEachSide = lengthDifference / 2;
-            var el0IsLonger = el0.length() > el1.length();
-            var longestElement = el0IsLonger ? el0 : el1;
-            var shortestElement = el0IsLonger ? el1 : el0;
+            var el0IsLonger = e0.length() > e1.length();
+            var longestElement = el0IsLonger ? e0 : e1;
+            var shortestElement = el0IsLonger ? e1 : e0;
 
             var truncatedLongest = longestElement.substring(
                     charactersToRemoveOnEachSide,
                     longestElement.length() - charactersToRemoveOnEachSide
             );
-            if (!truncatedLongest.equals(shortestElement)) {
-                return false;
-            }
-        }
-        return true;
+            
+            return truncatedLongest.equals(shortestElement);
     }
     
-    static ArrayList<Integer> lengths;
-    
-    static int magicSetGenerate(long[] numbersList)
-    {
+    static int magicSetGenerate(long[] numbersList) {
         HashMap<Integer, ArrayList<Long>> lengthMap = new HashMap<Integer, ArrayList<Long>>();
         for (int i = 1; i <= 17; i += 2) {
             lengthMap.put(i, new ArrayList<Long>());
         }
         
-        for (long number : numbersList)
-        {
+        for (long number : numbersList) {
             lengthMap.get(Long.toString(number).length()).add(number);
         }
         
-        for (int i = 1; i <= 17; i += 2) {
-            if (lengthMap.get(i).size() == 0) {
-                lengthMap.remove(i);
-            }
-        }
+        magicSetLength(lengthMap, 1);
         
-        lengths = new ArrayList<>(lengthMap.keySet());
-        
-        ArrayList<Long> resultArray;
-        
-        for (int i = lengths.size(); i > 1; i++) {
-            resultArray = magicSetListGenerate(new ArrayList<Long>(), i);
-            if (resultArray != null) {
-                return i;
-            }
-        }
         return 1;
     }
     
-    static ArrayList<Long> magicSetListGenerate(ArrayList<Long> list, int length)
-    {
-        
-        return null;
+    static int magicSetLength(HashMap<Integer, ArrayList<Long>> list, int startLength) {
+        for (long smallerNumber : list.get(startLength)) {
+            for (int i = startLength; i <= 17; i++) {
+                for (long largerNumber : list.get(i)) {
+                    if (magicSetCheck(smallerNumber, largerNumber)) {
+                        return magicSetLength(list, i) + 1;
+                    }
+                }
+            }
+        }
+        return 0;
     }
 }
