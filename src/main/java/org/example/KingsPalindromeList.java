@@ -11,8 +11,10 @@ import java.util.Scanner;
  * Usage:
  * TODO:
  * task 1:
- * 1. create function boolean palindromeCheck(long numberToCheck) that returns true if input is palindrome
- * 2. create function long palindromeCorrect(long numberToCorrect) that corrects the input and returns palindrome
+ * 1. create function boolean palindromeCheck(long numberToCheck)
+ *    that returns true if input is palindrome
+ * 2. create function long palindromeCorrect(long numberToCorrect)
+ *    that corrects the input and returns palindrome
  *    it does this by increasing the number until it becomes a palindrome
  * 3. run this function for each element in input list
  *
@@ -51,14 +53,16 @@ class KingsPalindromeList {
             numbers[i] = input.nextLong();
         }
         
-        switch (taskNumber)
-        {
+        switch (taskNumber) {
             case 1 -> {
                 for (int i = 0; i < numberOfElements; i++) {
                     numbers[i] = palindromeCorrect(numbers[i]);
                     System.out.print(numbers[i] + " ");
                 }
                 
+            }
+            default -> {
+                return;
             }
         }
     }
@@ -92,7 +96,10 @@ class KingsPalindromeList {
             var longestElement = el0IsLonger ? el0 : el1;
             var shortestElement = el0IsLonger ? el1 : el0;
 
-            var truncatedLongest = longestElement.substring(charactersToRemoveOnEachSide, longestElement.length() - charactersToRemoveOnEachSide);
+            var truncatedLongest = longestElement.substring(
+                    charactersToRemoveOnEachSide,
+                    longestElement.length() - charactersToRemoveOnEachSide
+            );
             if (!truncatedLongest.equals(shortestElement)) {
                 return false;
             }
