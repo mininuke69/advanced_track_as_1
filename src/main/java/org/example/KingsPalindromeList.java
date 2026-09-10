@@ -4,10 +4,19 @@
  * 
  * Usage:
  * TODO:
- * 1. create function boolean PalindromeCheck(long NumberToCheck) that returns true if input is palindrome
- * 2. create function long PalindromeCorrect(long NumberToCorrect) that corrects the input and returns palindrome
+ * task 1:
+ * 1. create function boolean palindromeCheck(long numberToCheck) that returns true if input is palindrome
+ * 2. create function long palindromeCorrect(long numberToCorrect) that corrects the input and returns palindrome
  *    it does this by increasing the number until it becomes a palindrome
- * 3. for task 1: run this function for each element in input list
+ * 3. run this function for each element in input list
+ *
+ * task 2:
+ * 1. create function magicSetCheck(...) that returns true if input is a magic set
+ * 2. create function magicSetGenerate(...) that takes the corrected palindrome list and returns the largest magic set.
+ *    it does this by trying combinations of two palindromes, if it finds one,
+ *    it tries to make one of three, up to the length of the corrected palindrome list.
+ *    if it fails to make a list anytime before that, it returns that list.
+ * 3. run magicSetGenerate(...) and count the number of outputs
  *
  * 
  * END TODO
