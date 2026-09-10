@@ -22,11 +22,11 @@ class KingsPalindromeList {
     
     public static void main(String[] args) {
         //Test
-        System.out.println(PalindromeCheck(123454321));
+        System.out.println(palindromeCheck(123454321));
     }
     
     //Takes number, reverses it and checks if the two match
-    static boolean PalindromeCheck(long numberToCheck) {
+    static boolean palindromeCheck(long numberToCheck) {
         String numberString = Long.toString(numberToCheck);
         String reverseNumberString = new StringBuilder(numberString).reverse().toString();
         return numberString.equals(reverseNumberString);
