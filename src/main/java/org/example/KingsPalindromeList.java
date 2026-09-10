@@ -29,7 +29,13 @@ import java.util.Scanner;
  *
  * magicSetGenerate:
  * 1. Seperate each element to according to its length in a HashMap
- * 2. 
+ * 2. Remove unused lengths from the HashMap
+ * 3. Starting from the maximum length possible check to see if there is a valid magic set in that length
+ *    a. Using a recursive function, get a combination of each element from each length list.
+ *    b. Check if they match using magicSetCheck function.
+ *    c. If match then return the array.
+ *    d. If not, try for different cases.
+ *    e. If no magic set found for the given length, decrease the length by 1 and try again.
  * 
  * END TODO
  * 
