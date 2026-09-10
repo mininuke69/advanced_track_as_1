@@ -31,4 +31,11 @@ class KingsPalindromeList {
         String reverseNumberString = new StringBuilder(numberString).reverse().toString();
         return numberString.equals(reverseNumberString);
     }
+
+    static long palindromeCorrect(long numberToCorrect) {
+        while (!palindromeCheck(numberToCorrect)) {
+            numberToCorrect++;
+        }
+        return numberToCorrect;
+    }
 }
