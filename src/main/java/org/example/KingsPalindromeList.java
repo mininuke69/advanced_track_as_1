@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -23,6 +25,9 @@ import java.util.Scanner;
  *    if it fails to make a list anytime before that, it returns.
  * 3. parse input and run magicSetGenerate(...)
  *
+ * magicSetGenerate:
+ * 1. Seperate each element to according to its length in a HashMap
+ * 2. 
  * 
  * END TODO
  * 
@@ -93,5 +98,44 @@ class KingsPalindromeList {
             }
         }
         return true;
+    }
+    
+    static ArrayList<Integer> lengths;
+    
+    static int magicSetGenerate(long[] numbersList)
+    {
+        HashMap<Integer, ArrayList<Long>> lengthMap = new HashMap<Integer, ArrayList<Long>>();
+        for (int i = 1; i <= 17; i += 2) {
+            lengthMap.put(i, new ArrayList<Long>());
+        }
+        
+        for (long number : numbersList)
+        {
+            lengthMap.get(Long.toString(number).length()).add(number);
+        }
+        
+        for (int i = 1; i <= 17; i += 2) {
+            if (lengthMap.get(i).size() == 0) {
+                lengthMap.remove(i);
+            }
+        }
+        
+        lengths = new ArrayList<>(lengthMap.keySet());
+        
+        ArrayList<Long> resultArray;
+        
+        for (int i = lengths.size(); i > 1; i++) {
+            resultArray = magicSetListGenerate(new ArrayList<Long>(), i);
+            if (resultArray != null) {
+                return i;
+            }
+        }
+        return 1;
+    }
+    
+    static ArrayList<Long> magicSetListGenerate(ArrayList<Long> list, int length)
+    {
+        
+        return null;
     }
 }
