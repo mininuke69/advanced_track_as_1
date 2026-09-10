@@ -110,32 +110,45 @@ class KingsPalindromeList {
     }
     
     static int magicSetGenerate(long[] numbersList) {
-        HashMap<Integer, ArrayList<Long>> lengthMap = new HashMap<Integer, ArrayList<Long>>();
-        for (int i = 1; i <= 17; i += 2) {
-            lengthMap.put(i, new ArrayList<Long>());
+        //Create an array that stores longs with different lengths
+        ArrayList<ArrayList<Long>> lengthArray = new ArrayList<ArrayList<Long>>();
+        for (int i = 0; i < 9; i++) {
+            lengthArray.add(new ArrayList<Long>());
+        }
+        for (long number : numbersList) {
+            lengthArray.get(Long.toString(number).length()/ 2).add(number);
         }
         
-        for (long number : numbersList) {
-            lengthMap.get(Long.toString(number).length()).add(number);
-        }
+        //Remove empty arrays
+        lengthArray.removeIf(x -> x == new ArrayList<Long>());
         
         int maxLength = 0;
         
-        for (int i = 1; i <= 17; i += 2) {
-            maxLength = Math.max(maxLength, magicSetLength(lengthMap, i));
+        //Search for every length of magic set starting from the largest
+        for (int i = 0; i < lengthArray.size(); i++) {
+            maxLength = Math.max(maxLength, magicSetLength(lengthArray, i));
+            //If maximum possible size is found, return
+            if (maxLength == lengthArray.size() - i) {
+                break;
+            }
         }
         
         return maxLength;
     }
     
-    static int magicSetLength(HashMap<Integer, ArrayList<Long>> list, int startLength) {
+    static int magicSetLength(ArrayList<ArrayList<Long>> list, int startIndex) {
         int maxLength = 1;
-        
-        for (long smallerNumber : list.get(startLength)) {
-            for (int i = startLength + 2; i <= 17; i += 2) {
+        //Starts from the shorter number and checks if it is a palindrome of each longer number 
+        for (long smallerNumber : list.get(startIndex)) {
+            for (int i = startIndex + 1; i < list.size(); i++) {
                 for (long largerNumber : list.get(i)) {
                     if (magicSetCheck(smallerNumber, largerNumber)) {
+                        //Checks the branch of of the longer number and if it is longer, sets it to maxLength
                         maxLength = Math.max(maxLength, magicSetLength(list, i) + 1);
+                        //If maximum possible size is found, return
+                        if (maxLength == list.size() - startIndex) {
+                            return maxLength;
+                        }
                     }
                 }
             }
