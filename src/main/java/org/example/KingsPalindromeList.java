@@ -1,3 +1,6 @@
+
+import java.util.Scanner;
+
 /**
  * Reads a list of numbers, and can reconstruct the corresponding list of Palindromes,
  * produce the size of the largest magic set, and the content of that magic set.
@@ -30,8 +33,27 @@
 class KingsPalindromeList {
     
     public static void main(String[] args) {
-        //Test
-        System.out.println(palindromeCheck(123454321));
+        Scanner input = new Scanner(System.in);
+        
+        int taskNumber = input.nextInt();
+        int numberOfElements = input.nextInt();
+        
+        long[] numbers = new long[numberOfElements];
+        
+        for (int i = 0; i < numberOfElements; i++) {
+            numbers[i] = input.nextLong();
+        }
+        
+        switch (taskNumber)
+        {
+            case 1 -> {
+                for (int i = 0; i < numberOfElements; i++) {
+                    numbers[i] = palindromeCorrect(numbers[i]);
+                    System.out.print(numbers[i] + " ");
+                }
+                
+            }
+        }
     }
     
     //Takes number, reverses it and checks if the two match
