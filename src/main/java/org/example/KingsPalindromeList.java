@@ -91,22 +91,21 @@ class KingsPalindromeList {
 
     static boolean magicSetCheck(long num1, long num2) {
         
-            var e0 = String.valueOf(num1);
-            var e1 = String.valueOf(num2);
+        var e0 = String.valueOf(num1);
+        var e1 = String.valueOf(num2);
 
-            // match length by truncating longest, then check equality
-            var lengthDifference = Math.abs(e0.length() - e1.length());
-            var charactersToRemoveOnEachSide = lengthDifference / 2;
-            var el0IsLonger = e0.length() > e1.length();
-            var longestElement = el0IsLonger ? e0 : e1;
-            var shortestElement = el0IsLonger ? e1 : e0;
-
-            var truncatedLongest = longestElement.substring(
-                    charactersToRemoveOnEachSide,
-                    longestElement.length() - charactersToRemoveOnEachSide
-            );
+        // match length by truncating longest, then check equality
+        var lengthDifference = Math.abs(e0.length() - e1.length());
+        var charactersToRemoveOnEachSide = lengthDifference / 2;
+        var el0IsLonger = e0.length() > e1.length();
+        var longestElement = el0IsLonger ? e0 : e1;
+        var shortestElement = el0IsLonger ? e1 : e0;
+        var truncatedLongest = longestElement.substring(
+                charactersToRemoveOnEachSide,
+                longestElement.length() - charactersToRemoveOnEachSide
+        );
             
-            return truncatedLongest.equals(shortestElement);
+        return truncatedLongest.equals(shortestElement);
     }
     
     static int magicSetGenerate(long[] numbersList) {
@@ -116,7 +115,7 @@ class KingsPalindromeList {
             lengthArray.add(new ArrayList<Long>());
         }
         for (long number : numbersList) {
-            lengthArray.get(Long.toString(number).length()/ 2).add(number);
+            lengthArray.get(Long.toString(number).length() / 2).add(number);
         }
         
         //Remove empty arrays
