@@ -63,6 +63,12 @@ class KingsPalindromeList {
                 }
                 
             }
+            case 2 -> {
+                for (int i = 0; i < numberOfElements; i++) {
+                    numbers[i] = palindromeCorrect(numbers[i]);
+                }
+                System.out.print(magicSetGenerate(numbers));
+            }
             default -> {
                 return;
             }
@@ -113,21 +119,27 @@ class KingsPalindromeList {
             lengthMap.get(Long.toString(number).length()).add(number);
         }
         
-        magicSetLength(lengthMap, 1);
+        int maxLength = 0;
         
-        return 1;
+        for (int i = 1; i <= 17; i += 2) {
+            maxLength = Math.max(maxLength, magicSetLength(lengthMap, i));
+        }
+        
+        return maxLength;
     }
     
     static int magicSetLength(HashMap<Integer, ArrayList<Long>> list, int startLength) {
+        int maxLength = 1;
+        
         for (long smallerNumber : list.get(startLength)) {
-            for (int i = startLength; i <= 17; i++) {
+            for (int i = startLength + 2; i <= 17; i += 2) {
                 for (long largerNumber : list.get(i)) {
                     if (magicSetCheck(smallerNumber, largerNumber)) {
-                        return magicSetLength(list, i) + 1;
+                        maxLength = Math.max(maxLength, magicSetLength(list, i) + 1);
                     }
                 }
             }
         }
-        return 0;
+        return maxLength;
     }
 }
