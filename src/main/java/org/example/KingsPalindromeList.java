@@ -125,32 +125,28 @@ class KingsPalindromeList {
         
         //Search for every length of magic set starting from the largest
         for (int i = 0; i < lengthArray.size(); i++) {
-            maxLength = Math.max(maxLength, magicSetLength(lengthArray, i));
-            //If maximum possible size is found, return
-            if (maxLength == lengthArray.size() - i) {
-                break;
+            for (long numberSearched : lengthArray.get(i)) {
+                maxLength = Math.max(maxLength, magicSetLength(lengthArray, i, numberSearched));
+                //If maximum possible size is found, return
+                if (maxLength == lengthArray.size() - i) {
+                    break;
+                }
             }
         }
         
         return maxLength;
     }
     
-    static int magicSetLength(ArrayList<ArrayList<Long>> list, int startIndex) {
+    static int magicSetLength(ArrayList<ArrayList<Long>> list, int startIndex, long numberSearched) {
         int maxLength = 1;
-        //Starts from the shorter number and checks if it is a palindrome of each longer number 
-        for (long smallerNumber : list.get(startIndex)) {
+        //Checks each of the longer number group 
             for (int i = startIndex + 1; i < list.size(); i++) {
                 for (long largerNumber : list.get(i)) {
-                    if (magicSetCheck(smallerNumber, largerNumber)) {
+                    if (magicSetCheck(numberSearched, largerNumber)) {
                         //Checks the branch of of the longer number and if it is longer, sets it to maxLength
-                        maxLength = Math.max(maxLength, magicSetLength(list, i) + 1);
-                        //If maximum possible size is found, return
-                        if (maxLength == list.size() - startIndex) {
-                            return maxLength;
-                        }
+                        maxLength = Math.max(maxLength, magicSetLength(list, i, largerNumber) + 1);
                     }
                 }
-            }
         }
         return maxLength;
     }
