@@ -28,10 +28,18 @@ import java.util.Scanner;
  * 3. parse input and run magicSetGenerate(...)
  *
  * magicSetGenerate:
- * 1. Seperate each element to according to its length in a HashMap
+ * 1. Separate each element to according to its length in a HashMap
  * 2. Start from the lowest length element and check if it is in a magic set of any longer length element.
  * 3. If a magic set is found continue from the longer length element.
  * 4. If no magic set is found return to the previous length object.
+ * 
+ * Task 3:
+ * 1. Modify the magicSetGenerate and magicSetLength function so it would return a list instead of int.
+ *    a. A list will be stored in the function (also recursive) and replaced each time a longer function is found. 
+ *    b. If task 3 is selected then it would return the list and print it.
+ *    c. If task 2 is selected then length of the list would be printed.
+ * 2. Make sure that last magic set element from the list would be returned if more than 1 magic sets are possible.
+ *    (Which should be simple as the loop can be used to replace the stored list when longer or equal length list is found.)
  * 
  * END TODO
  * 
