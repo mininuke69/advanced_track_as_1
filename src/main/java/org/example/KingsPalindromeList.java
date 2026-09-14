@@ -1,7 +1,4 @@
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -11,7 +8,7 @@ import java.util.Scanner;
  * Usage:
  * TODO:
  * task 1:
- * 1. create function boolean palindromeCheck(long numberToCheck)
+ * 1. create function Boolean palindromeCheck(long numberToCheck)
  *    that returns true if input is palindrome
  * 2. create function long palindromeCorrect(long numberToCorrect)
  *    that corrects the input and returns palindrome
@@ -43,10 +40,10 @@ import java.util.Scanner;
  * 
  * END TODO
  * 
- * @author <NAME STUDENT 1>
+ * @author Nikita Ponomarev
  * @ID <ID STUDENT 1>
- * @author <NAME STUDENT 2>
- * @ID <ID STUDENT 2>
+ * @author Huseyin Basharan
+ * @ID 2428482
  * 
  */
 class KingsPalindromeList {
@@ -61,21 +58,24 @@ class KingsPalindromeList {
         
         for (int i = 0; i < numberOfElements; i++) {
             numbers[i] = input.nextLong();
+            numbers[i] = palindromeCorrect(numbers[i]);
         }
         
         switch (taskNumber) {
             case 1 -> {
                 for (int i = 0; i < numberOfElements; i++) {
-                    numbers[i] = palindromeCorrect(numbers[i]);
                     System.out.print(numbers[i] + " ");
                 }
                 
             }
             case 2 -> {
-                for (int i = 0; i < numberOfElements; i++) {
-                    numbers[i] = palindromeCorrect(numbers[i]);
+                System.out.print(magicSetGenerate(numbers).size());
+            }
+            case 3 -> {
+                ArrayList<Long> list = magicSetGenerate(numbers);
+                for (long l : list) {
+                    System.out.print(l + " ");
                 }
-                System.out.print(magicSetGenerate(numbers));
             }
             default -> {
                 return;
@@ -116,7 +116,7 @@ class KingsPalindromeList {
         return truncatedLongest.equals(shortestElement);
     }
     
-    static int magicSetGenerate(long[] numbersList) {
+    static ArrayList<Long> magicSetGenerate(long[] numbersList) {
         //Create an array that stores longs with different lengths
         ArrayList<ArrayList<Long>> lengthArray = new ArrayList<ArrayList<Long>>();
         for (int i = 0; i < 9; i++) {
@@ -127,35 +127,47 @@ class KingsPalindromeList {
         }
         
         //Remove empty arrays
-        lengthArray.removeIf(x -> x == new ArrayList<Long>());
+        lengthArray.removeIf(x -> x.size() == 0);
         
-        int maxLength = 0;
+        ArrayList<Long> longestSet = new ArrayList<Long>();
         
         //Search for every length of magic set starting from the largest
-        for (int i = 0; i < lengthArray.size(); i++) {
+        for (int i = 0; i < lengthArray.size() - 1; i++) {
             for (long numberSearched : lengthArray.get(i)) {
-                maxLength = Math.max(maxLength, magicSetLength(lengthArray, i, numberSearched));
+                ArrayList<Long> searchedSet = new ArrayList<Long>();
+                searchedSet.add(numberSearched);
+                
+                searchedSet = magicSetLength(lengthArray, i, searchedSet);
+                
+                longestSet = searchedSet.size() >= longestSet.size() ? searchedSet : longestSet;
                 //If maximum possible size is found, return
-                if (maxLength == lengthArray.size() - i) {
+                if (longestSet.size() == lengthArray.size() - i) {
                     break;
                 }
             }
         }
         
-        return maxLength;
+        return longestSet;
     }
     
-    static int magicSetLength(ArrayList<ArrayList<Long>> list, int startIndex, long numberSearched) {
-        int maxLength = 1;
+    static ArrayList<Long> magicSetLength(ArrayList<ArrayList<Long>> list, int startIndex, ArrayList<Long> initialSet) {
+        long numberSearched = initialSet.getLast();
+        ArrayList<Long> longestSet = new ArrayList<Long>(initialSet);
+        
         //Checks each of the longer number group 
-            for (int i = startIndex + 1; i < list.size(); i++) {
-                for (long largerNumber : list.get(i)) {
-                    if (magicSetCheck(numberSearched, largerNumber)) {
-                        //Checks the branch of of the longer number and if it is longer, sets it to maxLength
-                        maxLength = Math.max(maxLength, magicSetLength(list, i, largerNumber) + 1);
-                    }
+        for (int i = startIndex + 1; i < list.size(); i++) {
+            for (long largerNumber : list.get(i)) {
+                if (magicSetCheck(numberSearched, largerNumber)) {
+                    ArrayList<Long> searchedSet = new ArrayList<Long>(initialSet);
+                    searchedSet.add(largerNumber);
+                    
+                    searchedSet = magicSetLength(list, i, searchedSet);
+                    
+                    longestSet = searchedSet.size() >= longestSet.size() ? searchedSet : longestSet;
                 }
+            }
         }
-        return maxLength;
+        
+        return longestSet;
     }
 }
