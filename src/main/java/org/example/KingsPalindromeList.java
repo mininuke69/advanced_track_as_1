@@ -41,7 +41,7 @@ import java.util.Scanner;
  * END TODO
  * 
  * @author Nikita Ponomarev
- * @ID <ID STUDENT 1>
+ * @ID 2461463
  * @author Huseyin Basharan
  * @ID 2428482
  * 
@@ -63,24 +63,27 @@ class KingsPalindromeList {
         
         switch (taskNumber) {
             case 1 -> {
-                for (int i = 0; i < numberOfElements; i++) {
-                    System.out.print(numbers[i] + " ");
+                System.out.print(numbers[0]);
+                for (int i = 1; i < numberOfElements; i++) {
+                    System.out.print(" " + numbers[i]);
                 }
-                
             }
             case 2 -> {
                 System.out.print(magicSetGenerate(numbers).size());
             }
             case 3 -> {
                 ArrayList<Long> list = magicSetGenerate(numbers);
-                for (long l : list) {
-                    System.out.print(l + " ");
+                System.out.print(list.get(0));
+                for (int i = 1; i < list.size(); i++) {
+                    System.out.print(" " + list.get(i));
                 }
             }
             default -> {
                 return;
             }
         }
+        
+        System.out.println();
     }
     
     //Takes number, reverses it and checks if the two match
@@ -90,6 +93,7 @@ class KingsPalindromeList {
         return numberString.equals(reverseNumberString);
     }
 
+    //Finds the nearest greatest palindrome
     static long palindromeCorrect(long numberToCorrect) {
         while (!palindromeCheck(numberToCorrect)) {
             numberToCorrect++;
@@ -131,17 +135,19 @@ class KingsPalindromeList {
         
         ArrayList<Long> longestSet = new ArrayList<Long>();
         
-        //Search for every length of magic set starting from the largest
-        for (int i = 0; i < lengthArray.size() - 1; i++) {
+        //Search for every length of magic set starting from the smallest
+        for (int i = 0; i < lengthArray.size(); i++) {
             for (long numberSearched : lengthArray.get(i)) {
                 ArrayList<Long> searchedSet = new ArrayList<Long>();
                 searchedSet.add(numberSearched);
                 
                 searchedSet = magicSetLength(lengthArray, i, searchedSet);
                 
+                //Replace the longest set if a longer or equal size set with greater X is found
                 longestSet = searchedSet.size() >= longestSet.size() ? searchedSet : longestSet;
+                
                 //If maximum possible size is found, return
-                if (longestSet.size() == lengthArray.size() - i) {
+                if (longestSet.size() == lengthArray.size()) {
                     break;
                 }
             }
@@ -158,11 +164,14 @@ class KingsPalindromeList {
         for (int i = startIndex + 1; i < list.size(); i++) {
             for (long largerNumber : list.get(i)) {
                 if (magicSetCheck(numberSearched, largerNumber)) {
+                    //Create a new list to be searched that also contains the longer number
                     ArrayList<Long> searchedSet = new ArrayList<Long>(initialSet);
                     searchedSet.add(largerNumber);
                     
+                    //Search for any longer magic set
                     searchedSet = magicSetLength(list, i, searchedSet);
                     
+                    //Replace the longest set if a longer or equal size set with greater X is found
                     longestSet = searchedSet.size() >= longestSet.size() ? searchedSet : longestSet;
                 }
             }
