@@ -1,8 +1,5 @@
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Reads a list of numbers, and can reconstruct the corresponding list of Palindromes,
@@ -158,4 +155,33 @@ class KingsPalindromeList {
         }
         return maxLength;
     }
+
+    /*
+    static boolean isSubstring(String longString, String shortString) {
+        if ()
+    }
+
+    static int alternativeMaxMagicSetLength(ArrayList<Long> inputList) {
+
+        1. sanitize inputs: 123454321 -> 54321
+        2. sort reversed
+        3. see how many substrings/subsets each value has, starting from the front (largest)
+        4. output as int
+
+
+        // convert
+        var list = new ArrayList<Long>();
+        for (long element : inputList) {
+            var elementAsString = String.valueOf(element);
+            var length = elementAsString.length();
+            var elementConverted = elementAsString.substring(length / 2);
+            var elementConvertedAsLong = Long.parseLong(elementConverted);
+            list.add(elementConvertedAsLong);
+        }
+        // reverse sort palindrome
+        list.sort(null);
+        Collections.reverse(list);
+
+    }
+    */
 }
