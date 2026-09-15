@@ -121,12 +121,17 @@ class KingsPalindromeList {
     }
     
     static ArrayList<Long> magicSetGenerate(long[] numbersList) {
+        // uncorrupt the input
+        var uncorruptedNumbersList = new ArrayList<Long>();
+        for (long number : numbersList) {
+            uncorruptedNumbersList.add(palindromeCorrect(number));
+        }
         //Create an array that stores longs with different lengths
         ArrayList<ArrayList<Long>> lengthArray = new ArrayList<ArrayList<Long>>();
         for (int i = 0; i < 9; i++) {
             lengthArray.add(new ArrayList<Long>());
         }
-        for (long number : numbersList) {
+        for (long number : uncorruptedNumbersList) {
             lengthArray.get(Long.toString(number).length() / 2).add(number);
         }
         
@@ -152,7 +157,7 @@ class KingsPalindromeList {
                 }
             }
         }
-        
+
         return longestSet;
     }
     
